@@ -4,21 +4,31 @@
 process.env.NODE_ENV = 'test';
 
 const mongoose = require('mongoose'),
+    Mockgoose = require('mockgoose').Mockgoose,
+    mockgoose = new Mockgoose(mongoose),
     Post = require('../models/post'),
+    config = require('../config'),
     dummyData = require('./utils/data'),
 
     chai = require('chai'),
     should = chai.should(),
     chaiHttp = require('chai-http'),
     cuid = require('cuid'),
-    slug = require('limax'),
-    server = require('../app');
+    slug = require('limax');
+
+const server = require('../app');
 
 chai.use(chaiHttp);
 
 describe('Posts', () => {
 
     beforeEach((done) => {
+        mockgoose.prepareStorage().then(() => {
+            mongoose.connect(config.mongoURL, (err) => {
+                done(err)
+            });
+        });
+
         Post.remove({}, (err) => {
             if (err) throw err;
             done();
