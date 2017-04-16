@@ -29,8 +29,15 @@ describe('Posts', () => {
             });
         });
 
-        Post.remove({}, (err) => {
-            if (err) throw err;
+        let post = new Post({
+            'title': dummyData.post2.title,
+            'content': dummyData.post2.content,
+            'slug': slug(dummyData.post2.title, { lowercase: true }),
+            'cuid': cuid()
+        });
+
+        post.save((err) => {
+            if (err) done(err);
             done();
         });
     });
@@ -48,20 +55,22 @@ describe('Posts', () => {
             .get('/api/posts')
             .end((err, res) => {
                 res.should.have.status(200);
+                res.body.posts.should.be.a('array');
+                res.body.posts[0].should.have.all.keys('id', 'cuid', 'slug', 'title', 'content');
                 done();
             });
         });
     });
 
-
-    describe('/POST post', () => {
+    describe('/posts create a single post', () => {
         it('should create a post', (done) => {
             chai.request(server)
             .post('/api/posts')
             .send(dummyData.post1)
             .end((err, res) => {
                 res.should.have.status(201);
-                res.body.should.be.a('object');
+                res.body.post.should.be.a('object');
+                res.body.post.should.have.all.keys('id', 'cuid', 'slug', 'title', 'content');
                 done();
             });
         })
@@ -81,6 +90,8 @@ describe('Posts', () => {
                 .get(`/api/posts/${savedPost.cuid}`)
                 .end((err, res) => {
                     res.should.have.status(200);
+                    res.body.post.should.be.a('object');
+                    res.body.post.should.have.all.keys('id', 'cuid', 'slug', 'title', 'content');
                     done();
                 });
             });
@@ -107,6 +118,8 @@ describe('Posts', () => {
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
+                    res.body.post.should.be.a('object');
+                    res.body.post.should.have.all.keys('id', 'cuid', 'slug', 'title', 'content');
                     done();
                 });
             });

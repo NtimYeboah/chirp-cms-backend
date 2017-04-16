@@ -4,7 +4,9 @@
 const Post = require('../models/post'),
     cuid = require('cuid'),
     slug = require('limax'),
-    sanitizeHtml = require('sanitize-html');
+    sanitizeHtml = require('sanitize-html'),
+
+    transform = require('./../utils/transformer');
 
 /**
  * Get all posts
@@ -18,7 +20,9 @@ const getPosts = function(req, res) {
             res.status(500).send(err);
         }
 
-        res.json({ posts });
+        res.status(200).json({
+            posts: transform.collection(posts)
+        });
     });
 };
 
@@ -47,7 +51,9 @@ const addPost = function(req, res) {
             res.status(500).send(err);
         }
 
-        res.status(201).json({ post: saved });
+        res.status(201).json({
+            post: transform.item(saved)
+        });
     });
 };
 
@@ -63,7 +69,9 @@ const getPost = function(req, res) {
             res.status(500).send(err);
         }
 
-        res.json({ post });
+        res.status(200).json({
+            post: transform.item(post)
+        });
     });
 };
 
@@ -84,7 +92,9 @@ const updatePost = function(req, res) {
                 res.status(500).send(err);
             }
 
-            res.status(200).send({ updatedPost });
+            res.status(200).send({
+                post: transform.item(updatedPost)
+            });
         });
     });
 };
