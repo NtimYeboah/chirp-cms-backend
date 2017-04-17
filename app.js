@@ -3,6 +3,7 @@
  */
 const express = require('express'),
     bodyParser = require('body-parser'),
+    cors = require('cors'),
     morgan = require('morgan'),
     path = require('path'),
     mongoose = require('mongoose'),
@@ -19,6 +20,9 @@ mongoose.connect(config.mongoURL, (err) => {
         throw err;
     }
 });
+
+// Enable cors for all clients
+app.use(cors());
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
