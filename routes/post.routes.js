@@ -9,15 +9,15 @@ const PostController = require('../controllers/post.controller'),
 router.route('/posts').get(PostController.getPosts);
 
 // Get a single post
-router.route('/posts/:cuid').get(PostController.getPost);
+router.route('/posts/:slug').get(PostController.getPost);
 
 // Add a post
 router.route('/posts').post(PostController.addPost);
 
 // Update a post
-router.route('/posts/:cuid').put(PostController.updatePost);
+router.route('/posts/:slug').put(PostController.updatePost);
 
 // Delete a post
-router.route('/posts/:cuid').delete(PostController.deletePost);
+router.route('/posts/:slug').delete(PostController.deletePost);
 
 module.exports = router;

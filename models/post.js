@@ -15,7 +15,8 @@ const postSchema = new Schema({
     },
     slug: {
         type: 'String',
-        required: true
+        required: true,
+        unique: true
     },
     cuid: {
         type: 'String',

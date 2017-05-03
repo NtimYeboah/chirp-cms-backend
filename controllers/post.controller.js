@@ -64,7 +64,7 @@ const addPost = function(req, res) {
  * @param res
  */
 const getPost = function(req, res) {
-    Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
+    Post.findOne({ slug: req.params.slug }).exec((err, post) => {
         if (err) {
             res.status(500).send(err);
         }
@@ -82,7 +82,7 @@ const getPost = function(req, res) {
  * @param res
  */
 const updatePost = function(req, res) {
-    Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
+    Post.findOne({ slug: req.params.slug }).exec((err, post) => {
         if (err) {
             res.status(500).send(err);
         }
@@ -106,7 +106,7 @@ const updatePost = function(req, res) {
  * @param res
  */
 const deletePost = function(req, res) {
-    Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
+    Post.findOne({ slug: req.params.slug }).exec((err, post) => {
         if (err) {
             res.status(500).send(err);
         }

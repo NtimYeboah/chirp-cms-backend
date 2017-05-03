@@ -76,18 +76,18 @@ describe('Posts', () => {
         })
     });
 
-    describe('/GET/:cuid post', () => {
+    describe('/GET/slug post', () => {
         it('should get a single book', (done) => {
             let post = new Post({
-                'title': dummyData.post2.title,
-                'content': dummyData.post2.content,
-                'slug': slug(dummyData.post2.title, { lowercase: true }),
+                'title': dummyData.post1.title,
+                'content': dummyData.post1.content,
+                'slug': slug(dummyData.post1.title, { lowercase: true }),
                 'cuid': cuid()
             });
 
             post.save((err, savedPost) => {
                 chai.request(server)
-                .get(`/api/posts/${savedPost.cuid}`)
+                .get(`/api/posts/${savedPost.slug}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.post.should.be.a('object');
@@ -98,7 +98,7 @@ describe('Posts', () => {
         });
     });
 
-    describe('/PUT/:cuid update', () => {
+    describe('/PUT/slug update', () => {
         it('should update a post', (done) => {
             let post = new Post({
                 'title': dummyData.post1.title,
@@ -109,7 +109,7 @@ describe('Posts', () => {
 
             post.save((err, savedPost) => {
                 chai.request(server)
-                .put(`/api/posts/${savedPost.cuid}`)
+                .put(`/api/posts/${savedPost.slug}`)
                 .send({
                     'title': 'This is a little ',
                     'content': dummyData.post2.content,
