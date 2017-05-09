@@ -10,6 +10,8 @@
     "limax": "^1.5.0",
     "mongoose": "^4.9.3",
     "morgan": "^1.8.1",
+    "passport": "^0.3.2",
+    "passport-twitter": "^1.0.4",
     "sanitize-html": "^1.14.1"
   },
   "devDependencies": {
